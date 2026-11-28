@@ -1,0 +1,50 @@
+import sys
+import os
+import math
+import random
+import time
+from collections import defaultdict, deque, Counter
+from heapq import heappush, heappop, heapify
+from bisect import bisect_left, bisect_right
+from itertools import accumulate, permutations, combinations, pairwise
+
+if os.path.exists("test.txt"):
+    sys.stdin = open("test.txt", "r")
+
+input = sys.stdin.readline
+sys.set_int_max_str_digits(0)
+
+R = random.getrandbits(64)
+
+def is_sorted(arr):
+    for i in range(len(arr) - 1):
+        if arr[i] > arr[i+1]:
+            return False
+    return True
+
+def solve():
+    n, k, p = map(int, input().split())
+    arr = sorted(map(int, input().split()))
+
+    t = 0
+    idx = 0
+
+    for i in range(0, n-k+1, k):
+        single = sum(arr[i:i+k])
+        if single < p:
+            t += p
+            idx = i+k
+        else:
+            break
+
+    print(t+sum(arr[idx:]))
+
+
+def main():
+    t = int(input())
+
+    for _ in range(t):
+        solve()
+
+if __name__ == "__main__":
+    main()
